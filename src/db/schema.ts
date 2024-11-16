@@ -18,3 +18,15 @@ export const sessionTable = sqliteTable("session", {
 		.references(() => userTable.id),
 	expiresAt: integer("expires_at").notNull()
 });
+
+export const carsTable = sqliteTable("cars", {
+	id: text("id").notNull().primaryKey(),
+	userId: text("user_id")
+		.notNull()
+		.references(() => userTable.id),
+	make: text("make").notNull(),
+	model: text("model").notNull(),
+	year: integer("year").notNull(),
+	createdAt: integer("created_at").notNull(),
+	updatedAt: integer("updated_at").notNull(),
+});

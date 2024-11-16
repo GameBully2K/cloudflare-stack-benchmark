@@ -11,7 +11,7 @@ export async function sendVerificationEmail(name:string, email:string, code:stri
         },
         body: JSON.stringify({
             "sender": {
-                "email": "no-reply@attendora.com",
+                "email": "no-reply@weblion.pro",
                 "name": "Petbox"
             },
             "to": [

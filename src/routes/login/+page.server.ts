@@ -8,6 +8,7 @@ import {sendVerificationEmail} from "$lib/emailing/sib";
 
 import type { Actions, PageServerLoad } from "./$types";
 import { dev } from "$app/environment";
+import { form } from "elysia";
 
 export const load: PageServerLoad = async (event) => {
 	if (event.locals.user) {
@@ -26,6 +27,7 @@ export const actions: Actions = {
 		const email = formData.get("email")?.toString().toLowerCase();
 		const code = formData.get("code");
 		const rectify = formData.get("rectify")?? null;
+
 
 		if (rectify && Date.now()-parseInt(rectify as string) < 600000 && !code){
 			return {
@@ -60,7 +62,7 @@ export const actions: Actions = {
 					rectify: rectify
 				}
 			}
-			if ( code == await event.platform?.env.petboxkv.get(email) ) {
+			if ( code == await event.platform?.env.benchmark.get(email) ) {
 				const existingUser = await db.query.userTable.findFirst({
 					where: eq(schema.userTable.email, email)
 				})
@@ -95,7 +97,7 @@ export const actions: Actions = {
 		try {
 		//generate code
 		const code = Math.floor(100000 + Math.random() * 900000).toString();
-		await event.platform?.env.petboxkv.put(email, code, {expirationTtl: 600}); // 10 minutes
+		await event.platform?.env.benchmark.put(email, code, {expirationTtl: 600}); // 10 minutes
 		//send email
 		if (dev) {
 			console.log("code", code);

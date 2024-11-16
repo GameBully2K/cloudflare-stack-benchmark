@@ -25,7 +25,8 @@ export const actions = {
 		const username = formData.get("username")||null;
 		const firstName = formData.get("firstName")||null;
 		const lastName = formData.get("lastName")||null;
-
+		
+		
 		if (
 			typeof email !== "string" ||
 			email.length < 3 ||
